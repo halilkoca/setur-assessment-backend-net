@@ -2,7 +2,7 @@
 
 namespace Contact.API.Model
 {
-    public class ContactModel
+    public class ContactModel : BaseMongoModel
     {
         public ContactModel()
         {
