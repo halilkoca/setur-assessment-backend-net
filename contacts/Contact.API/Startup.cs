@@ -1,3 +1,6 @@
+using Contact.API.Infrastructure;
+using Contact.API.Infrastructure.ContactInformations;
+using Contact.API.Infrastructure.Contacts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +31,7 @@ namespace Contact.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IContactRepository, ContactRepository>();
-
+            services.AddScoped<IContactInformationRepository, ContactInformationRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
