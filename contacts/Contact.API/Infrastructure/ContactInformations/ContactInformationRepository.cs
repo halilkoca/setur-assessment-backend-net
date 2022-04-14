@@ -59,7 +59,6 @@ namespace Contact.API.Infrastructure.ContactInformations
             return true;
         }
 
-
         public void Dispose() { }
     }
 }
