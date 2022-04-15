@@ -57,8 +57,6 @@ namespace Contact.API
                 });
             });
             services.AddMassTransitHostedService();
-
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

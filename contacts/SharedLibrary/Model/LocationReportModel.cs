@@ -3,9 +3,9 @@ using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Text.Json.Serialization;
 
-namespace Report.API.Model
+namespace SharedLibrary.Model
 {
-    public class LocationReport
+    public class LocationReportModel
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
@@ -13,12 +13,18 @@ namespace Report.API.Model
         public DateTime CreatedOn { get; set; }
         public DateTime CompletedOn { get; set; }
         public ReportStatus Status { get; set; }
+
+        public string Location { get; set; }
+        public int LocationCount { get; set; }
+        public int PeopleCount { get; set; }
+        public int PhoneNumberCount { get; set; }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ReportStatus
     {
         Preparing = 1,
-        Completed
+        Completed,
+        Error
     }
 }

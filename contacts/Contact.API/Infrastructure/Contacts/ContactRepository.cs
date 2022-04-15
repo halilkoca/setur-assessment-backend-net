@@ -14,7 +14,7 @@ namespace Contact.API.Infrastructure.Contacts
         {
             var client = new MongoClient(Startup.Configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(Startup.Configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
-            Contacts = database.GetCollection<ContactModel>(Startup.Configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            Contacts = database.GetCollection<ContactModel>(Startup.Configuration.GetValue<string>("DatabaseSettings:ContactCollection"));
         }
 
         public IMongoCollection<ContactModel> Contacts { get; }

@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace EventBus.Messages.Events
 {
-    public class LocationReportEventList : IntegrationBaseEvent
+    public class LocationReportEvent : IntegrationBaseEvent
     {
-        public List<LocationReportEvent> LocationReportEvents { get; set; }
+        public LocationReportDetail LocationReportDetail { get; set; }
     }
 
-    public class LocationReportEvent
+    public class LocationReportDetail
     {
-        public string Location { get; set; }
-        public int PeopleCount { get; set; }
-        public int PhoneNumberCount { get; set; }
+        public Guid Id { get; set; }
     }
 }

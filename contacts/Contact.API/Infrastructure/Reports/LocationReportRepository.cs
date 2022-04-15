@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using SharedLibrary;
-using Report.API.Model;
-using Report.API;
+using SharedLibrary.Model;
+using Contact.API.Model;
+using MongoDB.Driver.Linq;
+using System.Linq;
 
 namespace Contact.API.Infrastructure.Reports
 {
@@ -15,34 +15,52 @@ namespace Contact.API.Infrastructure.Reports
         {
             var client = new MongoClient(Startup.Configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(Startup.Configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
-            LocationReports = database.GetCollection<LocationReport>(Startup.Configuration.GetValue<string>("DatabaseSettings:ReportCollection"));
+            Contacts = database.GetCollection<ContactModel>(Startup.Configuration.GetValue<string>("DatabaseSettings:ContactCollection"));
+            LocationReports = database.GetCollection<LocationReportModel>(Startup.Configuration.GetValue<string>("DatabaseSettings:ReportCollection"));
         }
 
-        public IMongoCollection<LocationReport> LocationReports { get; }
+        public IMongoCollection<ContactModel> Contacts { get; }
+        public IMongoCollection<LocationReportModel> LocationReports { get; }
 
-        public async Task<IEnumerable<LocationReport>> Get(BaseRequest model)
+        public async Task GenerateAndSave(Guid reportId)
         {
-            var sortt = Builders<LocationReport>.Sort.Ascending(x => x.CreatedOn);
-
-            var data = await LocationReports.Find(c => true)
-                .Sort(sortt)
-                .Skip((model.PageNumber - 1) * model.PageSize)
-                .Limit(model.PageSize)
+            var result = await Contacts.AsQueryable().Where(x =>
+                x.ContactInformations.Any(a => a.Type == InformationType.Location)
+                && x.ContactInformations.Any(a => a.Type == InformationType.PhoneNumber))
                 .ToListAsync();
 
-            return data;
+            var report = result
+                .Select(x => new
+                {
+                    Location = x.ContactInformations.Where(b => b.Type == InformationType.Location).FirstOrDefault().Value,
+                    LocationCount = x.ContactInformations.Where(a => a.Type == InformationType.Location).Count(),
+                    PeopleCount = 1,
+                    PhoneNumberCount = x.ContactInformations.Where(a => a.Type == InformationType.PhoneNumber).Count()
+                })
+                .GroupBy(b => b.Location)
+                .Select(a => new LocationReportModel
+                {
+                    Location = a.Key,
+                    LocationCount = a.Sum(b => b.LocationCount),
+                    PeopleCount = a.Sum(b => b.PeopleCount),
+                    PhoneNumberCount = a.Sum(b => b.PhoneNumberCount),
+                    UUID = reportId,
+                    CompletedOn = DateTime.UtcNow,
+                    Status = ReportStatus.Completed
+                })
+                .OrderByDescending(a => a.LocationCount)
+                .FirstOrDefault()
+                ;
+
+            await Update(report);
         }
 
-        public async Task<LocationReport> Get(Guid id)
+        public async Task<LocationReportModel> Update(LocationReportModel model)
         {
-            return await LocationReports.Find(c => c.UUID == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<LocationReport> Create(LocationReport model)
-        {
-            await LocationReports.InsertOneAsync(model);
+            await LocationReports.ReplaceOneAsync(c => c.UUID == model.UUID, model);
             return model;
         }
+
 
         public void Dispose()
         {
