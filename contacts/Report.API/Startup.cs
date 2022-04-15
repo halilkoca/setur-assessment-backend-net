@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,16 @@ namespace Report.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // MassTransit configuration
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq((context, configuraiton) =>
+                {
+                    configuraiton.Host(Configuration.GetValue<string>("EventBusSettings:HostAddress"));
+                });
+            });
+            services.AddMassTransitHostedService();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

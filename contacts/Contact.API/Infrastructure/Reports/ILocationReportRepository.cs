@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Contact.API.Infrastructure.Reports
 {
-    public interface IReportSubscriptionRepository
+    public interface ILocationReportRepository
     {
         IMongoCollection<LocationReport> LocationReports { get; }
-
         Task<IEnumerable<LocationReport>> Get(BaseRequest model);
         Task<LocationReport> Get(Guid id);
         Task<LocationReport> Create(LocationReport model);

@@ -1,4 +1,5 @@
-﻿using Report.API.Model;
+﻿using Contact.API.Infrastructure.Reports;
+using Report.API.Model;
 using SharedLibrary;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,18 @@ namespace Report.API.Services
 {
     public class ReportGeneratorService : IReportGeneratorService
     {
-        public Task<Guid> Create()
+        private readonly ILocationReportRepository _locationReportRepository;
+
+        public ReportGeneratorService(ILocationReportRepository locationReportRepository)
         {
+            _locationReportRepository = locationReportRepository ?? throw new ArgumentNullException(nameof(locationReportRepository));
+        }
+
+        public Task<Guid> Generate()
+        {
+
+            _locationReportRepository.Create();
+
             throw new NotImplementedException();
         }
 

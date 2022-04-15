@@ -9,13 +9,13 @@ using Report.API;
 
 namespace Contact.API.Infrastructure.Reports
 {
-    public class ReportSubscriptionRepository : IReportSubscriptionRepository, IDisposable
+    public class LocationReportRepository : ILocationReportRepository, IDisposable
     {
-        public ReportSubscriptionRepository()
+        public LocationReportRepository()
         {
             var client = new MongoClient(Startup.Configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(Startup.Configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
-            LocationReports = database.GetCollection<LocationReport>(Startup.Configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+            LocationReports = database.GetCollection<LocationReport>(Startup.Configuration.GetValue<string>("DatabaseSettings:ReportCollection"));
         }
 
         public IMongoCollection<LocationReport> LocationReports { get; }

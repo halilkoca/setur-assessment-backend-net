@@ -1,6 +1,8 @@
-using Contact.API.Infrastructure;
+using Contact.API.EventBusConsumer;
 using Contact.API.Infrastructure.ContactInformations;
 using Contact.API.Infrastructure.Contacts;
+using EventBus.Messages.Constants;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,25 @@ namespace Contact.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.API", Version = "v1" });
             });
+
+            string rabbitMQConnectionString = Configuration.GetValue<string>("EventBusSettings:HostAddress");
+
+            services.AddMassTransit(config =>
+            {
+                config.AddConsumer<LocationReportConsumer>();
+
+                config.UsingRabbitMq((context, configuraiton) =>
+                {
+                    configuraiton.Host(rabbitMQConnectionString);
+                    configuraiton.ReceiveEndpoint(EventBusContants.LocationReportQueue, c =>
+                    {
+                        c.ConfigureConsumer<LocationReportConsumer>(context);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

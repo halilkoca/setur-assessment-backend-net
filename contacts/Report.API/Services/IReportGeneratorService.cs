@@ -10,6 +10,6 @@ namespace Report.API.Services
     {
         Task<List<LocationReport>> GetList(BaseRequest request);
         Task<LocationReport> Get(System.Guid reportId);
-        Task<Guid> Create();
+        Task<Guid> Generate();
     }
 }

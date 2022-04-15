@@ -35,11 +35,11 @@ namespace Report.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("List-Of-Requests")]
+        [HttpGet("Generate")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Generate()
         {
-            var response = await _reportGeneratorService.Create();
+            var response = await _reportGeneratorService.Generate();
 
             return Ok(response);
         }
