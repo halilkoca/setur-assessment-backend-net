@@ -16,11 +16,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\EventBus.Messages\EventBus.Messages.csproj" />
 		<ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Infrastructure\Reports\" />
 		<Folder Include="Model\" />
 	</ItemGroup>
 

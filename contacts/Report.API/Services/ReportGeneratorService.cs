@@ -1,6 +1,8 @@
 ﻿using Contact.API.Infrastructure.Reports;
-using Report.API.Model;
+using EventBus.Messages.Events;
+using MassTransit;
 using SharedLibrary;
+using SharedLibrary.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,29 +11,35 @@ namespace Report.API.Services
 {
     public class ReportGeneratorService : IReportGeneratorService
     {
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILocationReportRepository _locationReportRepository;
 
-        public ReportGeneratorService(ILocationReportRepository locationReportRepository)
+        public ReportGeneratorService() { }
+
+        public ReportGeneratorService(IPublishEndpoint publishEndpoint, ILocationReportRepository locationReportRepository)
         {
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
             _locationReportRepository = locationReportRepository ?? throw new ArgumentNullException(nameof(locationReportRepository));
         }
 
-        public Task<Guid> Generate()
+        public async Task<LocationReportModel> Generate()
         {
+            var newRecord = await _locationReportRepository.Create(new LocationReportModel { CreatedOn = DateTime.UtcNow, Status = ReportStatus.Preparing });
+            LocationReportDetail locationReportDetail = new() { Id = newRecord.UUID };
 
-            _locationReportRepository.Create();
+            await _publishEndpoint.Publish(new LocationReportEvent { LocationReportDetail = locationReportDetail });
 
-            throw new NotImplementedException();
+            return newRecord;
         }
 
-        public Task<LocationReport> Get(Guid reportId)
+        public async Task<LocationReportModel> Get(Guid reportId)
         {
-            throw new NotImplementedException();
+            return await _locationReportRepository.Get(reportId);
         }
 
-        public Task<List<LocationReport>> GetList(BaseRequest request)
+        public async Task<List<LocationReportModel>> GetList(BaseRequest request)
         {
-            throw new NotImplementedException();
+            return await _locationReportRepository.Get(request);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Report.API.Model;
-using SharedLibrary;
+﻿using SharedLibrary;
+using SharedLibrary.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,8 +8,8 @@ namespace Report.API.Services
 {
     public interface IReportGeneratorService
     {
-        Task<List<LocationReport>> GetList(BaseRequest request);
-        Task<LocationReport> Get(System.Guid reportId);
-        Task<Guid> Generate();
+        Task<List<LocationReportModel>> GetList(BaseRequest request);
+        Task<LocationReportModel> Get(Guid reportId);
+        Task<LocationReportModel> Generate();
     }
 }

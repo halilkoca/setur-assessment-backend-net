@@ -19,6 +19,15 @@ namespace Report.API.Controllers
             _reportGeneratorService = reportGeneratorService ?? throw new ArgumentNullException(nameof(reportGeneratorService));
         }
 
+        [HttpGet("Generate")]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Generate()
+        {
+            var response = await _reportGeneratorService.Generate();
+
+            return Ok(response);
+        }
+
         [HttpGet("Get")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get(BaseRequest request)
@@ -35,14 +44,7 @@ namespace Report.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Generate")]
-        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Generate()
-        {
-            var response = await _reportGeneratorService.Generate();
-
-            return Ok(response);
-        }
+      
 
 
 
