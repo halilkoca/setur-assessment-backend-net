@@ -6,8 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
-		<PackageReference Include="FluentValidation" Version="10.4.0" />
+		<PackageReference Include="FluentValidation" Version="10.3.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="10.3.0" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.0" />
 		<PackageReference Include="MassTransit" Version="7.3.1" />
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
@@ -17,8 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\EventBus.Messages\EventBus.Messages.csproj" />
-	  <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
+		<ProjectReference Include="..\EventBus.Messages\EventBus.Messages.csproj" />
+		<ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

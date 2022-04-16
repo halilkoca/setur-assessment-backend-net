@@ -1,7 +1,9 @@
 using Contact.API.EventBusConsumer;
 using Contact.API.Infrastructure.ContactInformations;
 using Contact.API.Infrastructure.Contacts;
+using Contact.API.Infrastructure.Reports;
 using EventBus.Messages.Constants;
+using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,8 +36,16 @@ namespace Contact.API
         {
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactInformationRepository, ContactInformationRepository>();
+            services.AddScoped<ILocationReportRepository, LocationReportRepository>();
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddControllers()
+                .AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.API", Version = "v1" });
