@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "contact.api": "StartDebugging",
+        "contactdb": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "report.api": "StartDebugging"
+      }
+    }
+  }
+}
