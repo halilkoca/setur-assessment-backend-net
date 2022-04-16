@@ -11,7 +11,7 @@ namespace Contact.API.Infrastructure.Reports
     {
         IMongoCollection<LocationReportModel> LocationReports { get; }
         Task<List<LocationReportModel>> Get(BaseRequest model);
-        Task<LocationReportModel> Get(Guid id);
+        Task<LocationReportModel> Get(string id);
         Task<LocationReportModel> Create(LocationReportModel model);
     }
 }

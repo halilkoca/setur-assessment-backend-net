@@ -9,7 +9,7 @@ namespace Report.API.Services
     public interface IReportGeneratorService
     {
         Task<List<LocationReportModel>> GetList(BaseRequest request);
-        Task<LocationReportModel> Get(Guid reportId);
+        Task<LocationReportModel> Get(string reportId);
         Task<LocationReportModel> Generate();
     }
 }

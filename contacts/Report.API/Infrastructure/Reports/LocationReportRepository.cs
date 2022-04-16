@@ -33,7 +33,7 @@ namespace Contact.API.Infrastructure.Reports
             return data;
         }
 
-        public async Task<LocationReportModel> Get(Guid id)
+        public async Task<LocationReportModel> Get(string id)
         {
             return await LocationReports.Find(c => c.UUID == id).FirstOrDefaultAsync();
         }

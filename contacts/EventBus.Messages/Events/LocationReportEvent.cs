@@ -9,6 +9,6 @@ namespace EventBus.Messages.Events
 
     public class LocationReportDetail
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace SharedLibrary.Model
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public Guid UUID { get; set; }
+        public string UUID { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime CompletedOn { get; set; }
         public ReportStatus Status { get; set; }

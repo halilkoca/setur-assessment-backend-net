@@ -32,7 +32,7 @@ namespace Report.API.Services
             return newRecord;
         }
 
-        public async Task<LocationReportModel> Get(Guid reportId)
+        public async Task<LocationReportModel> Get(string reportId)
         {
             return await _locationReportRepository.Get(reportId);
         }

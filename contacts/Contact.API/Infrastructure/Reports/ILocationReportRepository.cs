@@ -8,6 +8,6 @@ namespace Contact.API.Infrastructure.Reports
     public interface ILocationReportRepository
     {
         IMongoCollection<LocationReportModel> LocationReports { get; }
-        Task GenerateAndSave(Guid reportId);
+        Task GenerateAndSave(string reportId);
     }
 }

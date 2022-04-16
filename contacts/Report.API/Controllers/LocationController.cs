@@ -30,7 +30,7 @@ namespace Report.API.Controllers
 
         [HttpGet("Get")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Get(BaseRequest request)
+        public async Task<IActionResult> Get([FromQuery] BaseRequest request)
         {
             await _reportGeneratorService.GetList(request);
             return Ok();
@@ -38,13 +38,13 @@ namespace Report.API.Controllers
 
         [HttpGet("GetDetails")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetDetails(Guid reportId)
+        public async Task<IActionResult> GetDetails([FromQuery] string reportId)
         {
             var response = await _reportGeneratorService.Get(reportId);
             return Ok(response);
         }
 
-      
+
 
 
 

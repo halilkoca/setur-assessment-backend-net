@@ -22,7 +22,7 @@ namespace Contact.API.Infrastructure.Reports
         public IMongoCollection<ContactModel> Contacts { get; }
         public IMongoCollection<LocationReportModel> LocationReports { get; }
 
-        public async Task GenerateAndSave(Guid reportId)
+        public async Task GenerateAndSave(string reportId)
         {
             var result = await Contacts.AsQueryable().Where(x =>
                 x.ContactInformations.Any(a => a.Type == InformationType.Location)
