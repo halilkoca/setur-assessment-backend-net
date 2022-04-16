@@ -2,6 +2,7 @@
 {
     public class BaseRequest
     {
+        public BaseRequest() { }
         public BaseRequest(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
