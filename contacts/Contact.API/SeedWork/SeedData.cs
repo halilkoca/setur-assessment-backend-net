@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using SharedLibrary.Model;
 using System.Collections.Generic;
 
 namespace Contact.API.SeedWork
@@ -21,24 +22,22 @@ namespace Contact.API.SeedWork
 
             var contacts = database.GetCollection<ContactModel>(config.GetValue<string>("DatabaseSettings:ContactCollection"));
 
-            bool existProduct = contacts.Find(p => true).Any();
-            if (!existProduct)
-                contacts.InsertManyAsync(GetPreconfiguredProducts());
+            bool existContact = contacts.Find(p => true).Any();
+            if (!existContact)
+                contacts.InsertManyAsync(GetPreconfiguredContacts());
 
-
-            // redis generate service
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var reportRepository = services.GetRequiredService<IReportRepository>();
-            //    reportRepository.GenerateReport();
-            //}
+            var reports = database.GetCollection<LocationReportModel>(config.GetValue<string>("DatabaseSettings:ReportCollection"));
+            bool existReport = reports.Find(p => true).Any();
+            if (!existReport)
+            {
+                reports.InsertOneAsync(GetPreconfiguredReport());
+            }
 
             return host;
         }
 
 
-        private static IEnumerable<ContactModel> GetPreconfiguredProducts()
+        private static IEnumerable<ContactModel> GetPreconfiguredContacts()
         {
             return new List<ContactModel>()
             {
@@ -234,6 +233,15 @@ namespace Contact.API.SeedWork
                         }
                     }
                 }
+            };
+        }
+
+        private static LocationReportModel GetPreconfiguredReport()
+        {
+            return new LocationReportModel
+            {
+                CreatedOn = System.DateTime.UtcNow,
+                Status = ReportStatus.Preparing
             };
         }
     }
