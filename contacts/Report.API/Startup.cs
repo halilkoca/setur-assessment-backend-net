@@ -1,3 +1,4 @@
+using Contact.API.Infrastructure.Reports;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Report.API.Services;
 
 namespace Report.API
 {
@@ -30,8 +32,10 @@ namespace Report.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+            services.AddScoped<ILocationReportRepository, LocationReportRepository>();
 
-            // MassTransit configuration
+
             services.AddMassTransit(config =>
             {
                 config.UsingRabbitMq((context, configuraiton) =>

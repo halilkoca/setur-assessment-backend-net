@@ -40,17 +40,7 @@ namespace Contact.API
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers()
-                .AddFluentValidation(s =>
-                {
-                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                });
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.API", Version = "v1" });
-            });
-
+          
             string rabbitMQConnectionString = Configuration.GetValue<string>("EventBusSettings:HostAddress");
 
             services.AddMassTransit(config =>
@@ -67,6 +57,18 @@ namespace Contact.API
                 });
             });
             services.AddMassTransitHostedService();
+
+            services.AddControllers()
+              .AddFluentValidation(s =>
+              {
+                  s.RegisterValidatorsFromAssemblyContaining<Startup>();
+              });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.API", Version = "v1" });
+            });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
