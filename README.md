@@ -80,7 +80,7 @@ Distributed under the Apache License 2.0. See `LICENSE.txt` for more information
 
 Halil Koca - [@halil_koca](https://twitter.com/halil_koca)
 
-Project Link: [https://github.com/halilkoca/repo_name](https://github.com/halilkoca/setur-assessment-backend-net)
+Project Link: [https://github.com/halilkoca/setur-assessment-backend-net](https://github.com/halilkoca/setur-assessment-backend-net)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
