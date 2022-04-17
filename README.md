@@ -47,20 +47,24 @@ And that's all.
 
 ## Usage of Contact.API
 
-* api/Contact/Get(BaseRequest request) -> Get list of Contacts
-* api/Contact/Get(string id) -> Get one contact
-* api/Contact/GetByName(string id) -> Get one contact by name
-* api/Contact/Create(model) -> Create one contact with contact informations
-* api/Contact/CreateBulk -> Create bulk contacts
-* api/Contact/Update -> Update one contact
-* api/Contact/Delete -> Delete one contact
-* api/Contact/DeleteBulk -> Delete bulk contacts
+* http://localhost:5000/swagger/index.html
+
+* [api/Contact/Get(BaseRequest request)](http://localhost:5000/api/Contact/Get) -> Get list of Contacts
+* [api/Contact/Get(string id)](http://localhost:5000/api/Contact/Get) -> Get one contact
+* [api/Contact/GetByName(string id)](http://localhost:5000/api/Contact/GetByName) -> Get one contact by name
+* [api/Contact/Create(model)](http://localhost:5000/api/Contact/Create) -> Create one contact with contact informations
+* [api/Contact/CreateBulk](http://localhost:5000/api/Contact/CreateBulk) -> Create bulk contacts
+* [api/Contact/Update](http://localhost:5000/api/Contact/Update) -> Update one contact
+* [api/Contact/Delete](http://localhost:5000/api/Contact/Delete) -> Delete one contact
+* [api/Contact/DeleteBulk](http://localhost:5000/api/Contact/DeleteBulk) -> Delete bulk contacts
 
 ## Usage of Report.APi
 
-* api/Location/Generate() -> Generate location report
-* api/Location/Get(string id) -> Get information about reports
-* api/Location/GetDetails(string id) -> Get one report details
+* http://localhost:5001/swagger/index.html
+
+* [api/Location/Generate()](http://localhost:5001/api/Location/Generate) -> Generate location report
+* [api/Location/Get(string id)](http://localhost:5001/api/Location/Get) -> Get information about reports
+* [api/Location/GetDetails(string id)](http://localhost:5001/api/Location/GetDetails) -> Get one report details
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
