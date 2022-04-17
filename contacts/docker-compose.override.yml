@@ -1,8 +1,17 @@
 version: '3.4'
 
 services:
+  contact.api:
+    container_name: contact.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseSettings:ConnectionString=mongodb://contactdb:27017
+    depends_on:
+      - contactdb
+    ports:
+      - "5000:80"
   report.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5001:80"
